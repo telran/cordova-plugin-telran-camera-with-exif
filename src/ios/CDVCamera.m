@@ -536,7 +536,7 @@ static NSString* toBase64(NSData* data) {
                             
                                 // add metadata to image that is written to temp file
                                 // iOS 13 fix applied 9-23-2019, re; vlinde fork
-                                // see: https://github.com/vlinde/cordova-plugin-camera-with-exif/blob/master/src/ios/CDVCamera.m
+                                // see: https://github.com/telran/cordova-plugin-telran-camera-with-exif/blob/master/src/ios/CDVCamera.m
                                 CGImageRef imageRef = image.CGImage;
                             
                                 CGImageSourceRef sourceImage = CGImageSourceCreateWithData((__bridge_retained CFDataRef)self.data, NULL);
@@ -838,7 +838,7 @@ static NSString* toBase64(NSData* data) {
     
     if (self.metadata) {
         // iOS 13 fix applied 9-23-2019, re; vlinde fork
-        // see: https://github.com/vlinde/cordova-plugin-camera-with-exif/blob/master/src/ios/CDVCamera.m
+        // see: https://github.com/telran/cordova-plugin-telran-camera-with-exif/blob/master/src/ios/CDVCamera.m
         UIImage *image = [UIImage imageWithData:self.data];
         CGImageRef imageRef = image.CGImage;
     
@@ -1005,7 +1005,7 @@ static NSString* toBase64(NSData* data) {
     CDVCameraPicker* cameraPicker = [[CDVCameraPicker alloc] init];
     
     // modal fix, iOS 13 applied 9-23-2019, re; vlinde fork
-    // see: https://github.com/vlinde/cordova-plugin-camera-with-exif/blob/master/src/ios/CDVCamera.m
+    // see: https://github.com/telran/cordova-plugin-telran-camera-with-exif/blob/master/src/ios/CDVCamera.m
     cameraPicker.modalPresentationStyle = UIModalPresentationFullScreen; 
     
     cameraPicker.pictureOptions = pictureOptions;

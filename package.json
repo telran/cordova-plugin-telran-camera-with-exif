@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-camera-with-exif",
+  "name": "cordova-plugin-telran-camera-with-exif",
   "version": "1.3.1",
   "description": "Cordova Camera Plugin that will return an image as well as the EXIF data (including GPS location) on iOS and Android devices.",
   "cordova": {
-    "id": "cordova-plugin-camera-with-exif",
+    "id": "cordova-plugin-telran-camera-with-exif",
     "platforms": [
       "android",
       "ios"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/remoorejr/cordova-plugin-camera-with-exif.git"
+    "url": "git+https://github.com/telran/cordova-plugin-telran-camera-with-exif.git"
   },
   "keywords": [
     "ecosystem:cordova",
@@ -31,7 +31,7 @@
   "author": "@remoorejr",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/remoorejr/cordova-plugin-camera-with-exif/issues"
+    "url": "https://github.com/telran/cordova-plugin-telran-camera-with-exif/issues"
   },
-  "homepage": "https://github.com/remoorejr/cordova-plugin-camera-with-exif#readme"
+  "homepage": "https://github.com/telran/cordova-plugin-telran-camera-with-exif#readme"
 }

@@ -20,6 +20,9 @@
 -->
 # Release Notes
 
+### 1.3.3 (Aug 27, 2020)
+* [Hotfix] Add exif data to DATA_FILE request on iOS 
+
 ### 0.2.1 (Sept 5, 2013)
 * [CB-4656] Don't add line-breaks to base64-encoded images (Fixes type=DataURI)
 * [CB-4432] copyright notice change

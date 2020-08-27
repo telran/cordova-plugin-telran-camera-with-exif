@@ -605,13 +605,74 @@ static NSString* toBase64(NSData* data) {
         }
     
         case DestinationTypeDataUrl: {
-            
+
             image = [self retrieveImage:info options:options];
             NSData* data = [self processImage:image info:info options:options];
-            
-            if (data)  {
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:toBase64(data)];
+            NSString* jsonString = nil;
+
+            if (self.metadata){
+                NSError* error;
+                NSData* jsonData = [NSJSONSerialization dataWithJSONObject:self.metadata
+                                                                   options:0
+                                                                   error:&error];
+                if (!jsonData){
+                    NSLog(@"Error converting to JSON: %@",error);
+                    jsonString = @"{}";
+                } else {
+                    jsonString = [[NSString alloc] initWithData: jsonData encoding:NSUTF8StringEncoding];
+                }
+            } else {
+                jsonString = @"{}";
             }
+
+            if (data)  {
+                NSMutableDictionary* thisResult = [[NSMutableDictionary alloc] init];
+                [thisResult setObject: toBase64(data) forKey:@"filename"];
+                [thisResult setObject: jsonString forKey:@"json_metadata"];
+
+
+                // JSON Conversion for compatibility with Android plugin results
+                NSData *thisJsonResult;
+                NSError *jsonError = nil;
+
+                // convert thisResult object to JSON
+                if ([NSJSONSerialization isValidJSONObject:thisResult]) {
+                    thisJsonResult = [NSJSONSerialization dataWithJSONObject:thisResult
+                                                          options:NSJSONWritingPrettyPrinted
+                                                          error:&jsonError];
+                }
+
+                if (thisJsonResult != nil && jsonError == nil) {
+                    NSString *jsonStringResult = [[NSString alloc] initWithData:thisJsonResult encoding:NSUTF8StringEncoding];
+
+                    // filter results, remove "{}" from key values
+
+                    NSMutableString *filteredJsonResult = [NSMutableString stringWithString:jsonStringResult];
+                    NSRange idx = [filteredJsonResult rangeOfString:@"{GPS}"];
+                    if (idx.location == NSNotFound) {
+                        NSLog(@"{GPS} string not found.");
+                    } else {
+                        [filteredJsonResult replaceCharactersInRange:idx withString:@"GPS"];
+                    }
+
+                    idx = [filteredJsonResult rangeOfString:@"{Exif}"];
+                    if (idx.location == NSNotFound) {
+                        NSLog(@"{Exif} string not found.");
+                    } else {
+                        [filteredJsonResult replaceCharactersInRange:idx withString:@"Exif"];
+                    }
+
+                    NSLog(@"JSON Result Returned: %@\n\n",filteredJsonResult);
+
+                    // return filtered JSON string
+                    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filteredJsonResult];
+
+                } else {
+                    // json conversion failed, return dictionary, this should never happen
+                    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:thisResult];
+                }
+            }
+
             break;
         }
             
